@@ -1,56 +1,36 @@
-alphabet = [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-]
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-# Another solution of out of range error.
-# alphabet = [
-#     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-#     'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd',
-#     'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-#     't', 'u', 'v', 'w', 'x', 'y', 'z'
-# ]
+def caesar(start_text, shift_amount, cipher_direction):
+    end_text = ""
+    if cipher_direction == "decode":
+        shift_amount *= -1
+    for char in start_text:
+        if char in alphabet:
+            position = alphabet.index(char)
+            new_position = position + shift_amount
+            end_text += alphabet[new_position]
+        else:
+            end_text += char    
+    print(f"Here's the {cipher_direction}d result: {end_text}")
 
-direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-text = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
-
-alphabet_list_length = len(alphabet)
-
-
-#Create a function called 'encrypt' that takes the 'text' and 'shift' as inputs.
-#Inside the 'encrypt' function, shift each letter of the 'text' forwards in the alphabet by the shift amount and print the encrypted text.
-def encrypt(plain_text, shift_amount):
-    encrypt_text = ""
-    for character in plain_text:
-        i = alphabet.index(character)
-        i += shift_amount
-        # if
-        if i >= alphabet_list_length:
-            i = i - alphabet_list_length
-        new_character = alphabet[i]
-        encrypt_text += new_character
-
-    print(f"The encoded text is {encrypt_text}")
+#Import and print the logo from art.py when the program starts.
+from art import logo
+print(logo)
 
 
-#Create a function called 'decrypt' that takes the 'text' and 'shift' as inputs.
-#Inside the 'decrypt' function, shift each letter of the 'text' *backwards* in the alphabet by the shift amount and print the decrypted text.
-def decrypt(cipher_text, shift_amount):
-    decrypt_text = ""
-    for character in cipher_text:
-        i = alphabet.index(character)
-        i -= shift_amount
-        new_character = alphabet[i]
-        decrypt_text += new_character
+should_continue = True
+while should_continue:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
 
-    print(f"The decoded text is {decrypt_text}")
+    # Solve the "out of range" error
+    shift = shift % 26
 
-    #Then call the correct function based on that 'drection' variable.
-#Then call the correct function based on that 'drection' variable. 
+    # Call the function
+    caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
 
-
-if direction == "encode":
-    encrypt(plain_text=text, shift_amount=shift)
-elif direction == "decode":
-    decrypt(cipher_text=text, shift_amount=shift)
+    result = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n")
+    if result == "no":
+       should_continue = False
+       print("Goodbye!")
